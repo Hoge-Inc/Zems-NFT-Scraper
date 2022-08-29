@@ -8,7 +8,7 @@ function App() {
   const btnMsg = 'connect ethers'
   const listMsg = 'get list'
   const deadAddress = '0x000000000000000000000000000000000000dEaD'
-  
+
   const [userAddress, setUserAddress] = useState<ethers.BigNumber[]>()
   const [web3Prov, setWeb3Prov] = useState<ethers.providers.Web3Provider>()
   const [btnText, setBtnText] = useState<string>(btnMsg)
@@ -44,8 +44,8 @@ function App() {
   }
 
   const setAddr = async () => {
-    if (!ethers.utils.isAddress(contractAddress)) { setSomeMsg('need valid address'); return }
     if (!web3Prov) { web3(); return }
+    if (!ethers.utils.isAddress(contractAddress)) { setSomeMsg('need valid address'); return }
     const accounts = await web3Prov.send("eth_requestAccounts", []);
     setUserAddress(accounts)
     console.log(accounts)
