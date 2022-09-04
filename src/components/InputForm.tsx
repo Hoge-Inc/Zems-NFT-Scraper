@@ -19,6 +19,7 @@ const InputForm: React.FC<Props> = ({
     handleOnSubmit,
     placeholder,
 }) => {
+  if (!window.ethereum){return <>No Web3 Provider</>}
   const provider: ethers.providers.Web3Provider = new ethers.providers.Web3Provider(window.ethereum)
   const accounts =  provider.send("eth_requestAccounts", []);
   const handleClick = async (_someVar: any, e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
