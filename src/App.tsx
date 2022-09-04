@@ -42,7 +42,7 @@ const App: React.FC = () => {
     <div className="App">
       <header className="App-header">
         <>
-        <h1>Zem's NFT Scrapper</h1>
+        <h1>Zem's NFT Scraper</h1>
           <img src={logo} className="App-logo" alt="logo" />
           <InputForm
             setUserAddress = {setUserAddress}
