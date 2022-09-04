@@ -64,3 +64,42 @@ button {
   border-color: rgb(216, 216, 216) rgb(209, 209, 209) rgb(186, 186, 186);
   border-image: initial;
 }
+
+button.get {
+  background-color: seagreen;
+  font: 400 18px system-ui;
+  padding: 1em;
+  cursor: grab;
+  color: lavender;
+
+  text-shadow: 1px 2px grey;
+}
+
+button.get:hover {
+  background-color: chartreuse;
+  color: blueviolet;
+  font-weight:bolder;
+  text-shadow: none;
+}
+
+button.get:active {
+  cursor: grabbing;
+}
+
+input {
+  background-color: lightgoldenrodyellow;
+  color: darkviolet;
+  margin: 1em;
+  font: 400 18px system-ui;
+  inline-size: 23em;
+  padding-left: 1em;
+}
+
+input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: crimson;
+  opacity: 1; /* Firefox */
+}
+
+h1 {
+  color: steelblue
+}

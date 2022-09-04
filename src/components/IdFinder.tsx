@@ -20,7 +20,6 @@ export const GetNFTs: React.FC<Props> = ({
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
     useEffect(() => {
         if (!isLoading) {
-
             const API_KEY = process.env.REACT_APP_MORALIS_API_KEY
             if (!API_KEY) { alert('moralis api key not set in env') } else {
                 const options = {
@@ -29,8 +28,7 @@ export const GetNFTs: React.FC<Props> = ({
                         Accept: 'application/json',
                         'X-API-Key': API_KEY
                     }
-                };
-                
+                }
                 if (!userAddress || !contractAddress || loaded) {} else {
                     setIsLoading(true)
                     setTokenIds(new Map<number, []>())
@@ -39,28 +37,16 @@ export const GetNFTs: React.FC<Props> = ({
                     fetch(fetchUrl, options)
                     .then(response => response.json())
                     .then(response => { 
-                        var idList: any[] = []
                         let idMap = new Map<number, []>()
                         const r = response.result
-                        if (!r || r.length === 0) 
-                        { 
-                            const notFound = ['none found']
-                            idList.push(notFound)
-                        } 
-                        else 
-                        {
+                        if (!r || r.length === 0) {} 
+                        else {
                             r.forEach((someValue: any) => {
                                 if (someValue.token_id !== undefined){
-                                    //console.log(JSON.parse(someValue.metadata).attributes)
-                                    idMap.set(someValue.token_id, JSON.parse(someValue.metadata).attributes)
-                                    idList.push(someValue.token_id)
+                                    idMap.set(someValue.token_id, JSON.parse(someValue.metadata).attributes)                                  
                                 }
                             })
                         }
-                        for(const [key, value] of idMap) {
-                            console.log(key, Array.from(value.values()))
-                        }
-                        //console.log(idList)
                         setTokenIds(idMap)
                         setLoaded(true)
                     })
@@ -71,14 +57,26 @@ export const GetNFTs: React.FC<Props> = ({
         }
     },[contractAddress, isLoading, loaded, setLoaded, setTokenIds, tokenIds, userAddress])
 
-    if (tokenIds === undefined){return <div></div>}
-    const rendered: React.ReactNode[] = [];
-    for(let [key] of tokenIds) {
-        const component = React.createElement("div", {key: key}, key);
+    if (tokenIds === undefined){return <></>}
+    const rendered: React.ReactElement[]= [];
+    let itemKey = 0
+    
+    for(let [key, value] of tokenIds) {
+        let traits: any[] = []
+        let jsonItemList = []
+        for(let item of value) {
+            const jsonItem = JSON.parse(JSON.stringify(item))
+            if (jsonItem.trait_type !== undefined) { 
+                traits.push(React.createElement("div", {key: itemKey++}, jsonItem.trait_type, ' : ', jsonItem.value))
+                jsonItemList.push(jsonItem) 
+            }
+            
+        }
+        console.log(key, jsonItemList)
+        const component = React.createElement("div", {key: key}, '#', key, <br></br>, traits, <p></p>)
         rendered.push(component);
     }
-    //console.log(rendered)
-    return <span>{rendered}</span>  
+    return <><span>{rendered}</span></>
 }
 
 export default GetNFTs

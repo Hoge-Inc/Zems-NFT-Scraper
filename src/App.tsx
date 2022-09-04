@@ -17,6 +17,8 @@ const App: React.FC = () => {
 
   const handleOnSubmit = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
+    setTokenIds(undefined)
+    setSomeMsg('')
     if (!ethers.utils.isAddress(inputContract)) { setSomeMsg('need valid address'); return }
     console.log(inputContract);
     setLoaded(false)
@@ -40,42 +42,33 @@ const App: React.FC = () => {
     <div className="App">
       <header className="App-header">
         <>
-
-        <img src={logo} className="App-logo" alt="logo" />
-        <br></br>
-        <h5>{someMsg}</h5>
-
-        <br></br>
-        <InputForm
-          setUserAddress = {setUserAddress}
-          contractAddress={inputContract}
-          setContractAddress={setInputState}
-          handleOnSubmit={handleOnSubmit}
-          placeholder={inputText}
-        />
-        <h5>
-          <label hidden={!tokenIds}>Found Token IDs:</label>
-          <br></br>
-          <GetNFTs 
-            tokenIds={tokenIds}
-            setTokenIds={setTokenIds}
-            userAddress={userAddress}
+        <h1>Zem's NFT Scrapper</h1>
+          <img src={logo} className="App-logo" alt="logo" />
+          <InputForm
+            setUserAddress = {setUserAddress}
             contractAddress={inputContract}
-            loaded={loaded}
-            setLoaded={setLoaded}
+            setContractAddress={setInputState}
+            handleOnSubmit={handleOnSubmit}
+            placeholder={inputText}
           />
-        </h5>
-        <br></br>
-        <div hidden={!tokenIds}>
-          ToDo
-        </div>
+          <h5 hidden={!someMsg}>{someMsg}</h5>
+          <h5>
+            <label hidden={!tokenIds}>Found Token IDs:</label>
+            <p></p>
+            <GetNFTs 
+              tokenIds={tokenIds}
+              setTokenIds={setTokenIds}
+              userAddress={userAddress}
+              contractAddress={inputContract}
+              loaded={loaded}
+              setLoaded={setLoaded}
+            />
+          </h5>
         </>
       </header>
 
     </div>
   );
 }
-
-
 
 export default App;
